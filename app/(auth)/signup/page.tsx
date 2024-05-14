@@ -1,13 +1,39 @@
-export const metadata = {
-  title: 'Sign Up - Mosaic',
-  description: 'Page description',
-}
+'use client'
 
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import Link from 'next/link'
 import AuthHeader from '../auth-header'
 import AuthImage from '../auth-image'
+import { signup } from '@/app/actions/auth'
+import { useRouter } from 'next/navigation'
 
 export default function SignUp() {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const router = useRouter();
+
+  const handleButton = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const { success, message } = await signup(email, name, password, confirmPassword);
+      if (success) {
+        router.push('/dashboard');
+        console.log(message);
+        toast.success(message);
+      } else {
+        console.log(message);
+        toast.error(message);
+      }
+    } catch (error) {
+      console.error();
+    }
+  }
+
   return (
     <main className="bg-white dark:bg-slate-900">
 
@@ -22,28 +48,28 @@ export default function SignUp() {
             <div className="max-w-sm mx-auto w-full px-4 py-8">
               <h1 className="text-3xl text-slate-800 dark:text-slate-100 font-bold mb-6">Create your Account ✨</h1>
               {/* Form */}
-              <form>
+              <form onSubmit={handleButton}>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address <span className="text-rose-500">*</span></label>
-                    <input id="email" className="form-input w-full" type="email" />
+                    <input id="email" className="form-input w-full" type="email" value={email} onChange={e => setEmail(e.target.value)} />
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium mb-1" htmlFor="name">Full Name <span className="text-rose-500">*</span></label>
-                    <input id="name" className="form-input w-full" type="text" />
+                    <input id="name" className="form-input w-full" type="text" value={name} onChange={e => setName(e.target.value)} />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="role">Your Role <span className="text-rose-500">*</span></label>
-                    <select id="role" className="form-select w-full">
-                      <option>Designer</option>
-                      <option>Developer</option>
-                      <option>Accountant</option>
-                    </select>
-                  </div>
+
                   <div>
                     <label className="block text-sm font-medium mb-1" htmlFor="password">Password</label>
-                    <input id="password" className="form-input w-full" type="password" autoComplete="on" />
+                    <input id="password" className="form-input w-full" type="password" autoComplete="on" value={password} onChange={e => setPassword(e.target.value)} />
                   </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1" htmlFor="password">Confirm Password</label>
+                    <input id="confirmPassword" className="form-input w-full" type="password" autoComplete="on" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+                  </div>
+
                 </div>
                 <div className="flex items-center justify-between mt-6">
                   <div className="mr-1">
@@ -52,7 +78,7 @@ export default function SignUp() {
                       <span className="text-sm ml-2">Email me about product news.</span>
                     </label>
                   </div>
-                  <Link className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap" href="/">Sign Up</Link>
+                  <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap">Sign Up</button>
                 </div>
               </form>
               {/* Footer */}

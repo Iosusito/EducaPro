@@ -21,12 +21,12 @@ export default function SignUp() {
 
     try {
       const { success, message } = await signup(email, name, password, confirmPassword);
+
       if (success) {
-        router.push('/dashboard');
-        console.log(message);
+        router.push('/dashboard');  
         toast.success(message);
+
       } else {
-        console.log(message);
         toast.error(message);
       }
     } catch (error) {

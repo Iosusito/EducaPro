@@ -28,12 +28,38 @@ export async function signup(email: string, name: string, password: string, conf
 
         //encriptar la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
-
         const user = new User({ email, name, password: hashedPassword });
+
         await user.save();
-        await createSession(user._id, User.name); // user y User ???? Preguntar a Emilio
+
+        await createSession(user._id, user.name);
 
         return { success: true, message: "User created successfully" };
+
+    } catch (error) {
+        console.log(error);
+        return { success: false, message: "Internal error while creating user" };
+    }
+}
+
+export async function signin(email: string, password: string) {
+
+    // validaciones
+    if (email === "" || password === "") {
+        return { success: false, message: "Please fill all fields" };
+    }
+
+    try {
+        await dbConnect();
+
+        const user = await User.findOne({ email });
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return { success: false, message: "Email or password incorrect" };
+        }
+
+        await createSession(user._id, user.name);
+
+        return { success: true, message: "Login successful" };
 
     } catch (error) {
         console.log(error);

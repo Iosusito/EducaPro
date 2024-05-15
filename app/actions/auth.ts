@@ -2,7 +2,7 @@
 
 import dbConnect from "../lib/dbConnect";
 import User from "@/models/user";
-import { createSession } from "../lib/session";
+import { createSession, deleteSession } from "../lib/session";
 import bcrypt from "bcryptjs";
 
 export async function signup(email: string, name: string, password: string, confirmPassword: string) {
@@ -34,11 +34,11 @@ export async function signup(email: string, name: string, password: string, conf
 
         await createSession(user._id, user.name);
 
-        return { success: true, message: "User created successfully" };
+        return { success: true, message: "Sign up successful" };
 
     } catch (error) {
         console.log(error);
-        return { success: false, message: "Internal error while creating user" };
+        return { success: false, message: "An internal error has occured" };
     }
 }
 
@@ -59,10 +59,21 @@ export async function signin(email: string, password: string) {
 
         await createSession(user._id, user.name);
 
-        return { success: true, message: "Login successful" };
+        return { success: true, message: "Sign in successful" };
 
     } catch (error) {
         console.log(error);
-        return { success: false, message: "Internal error while creating user" };
+        return { success: false, message: "An internal error has occured" };
     }
 }
+
+export async function logout() {
+    try {
+      deleteSession();
+      return { success: true, message: "Sign out successful" };
+
+    } catch (error) {
+      console.error(error);
+      return { success: false, message: "An internal error has occured" };
+    }
+  }

@@ -4,10 +4,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, Transition } from '@headlessui/react'
 import UserAvatar from '@/public/images/user-avatar-32.png'
+import { logout } from '@/app/actions/auth'
+import { useRouter } from 'next/navigation'
 
 export default function DropdownProfile({ align }: {
   align?: 'left' | 'right'
 }) {
+  const router = useRouter();
+
+  const signout = async () => {
+    await logout();
+    router.push("/signin");
+  };
+
   return (
     <Menu as="div" className="relative inline-flex">
       <Menu.Button className="inline-flex justify-center items-center group">
@@ -43,9 +52,15 @@ export default function DropdownProfile({ align }: {
           </Menu.Item>
           <Menu.Item as="li">
             {({ active }) => (
-              <Link className={`font-medium text-sm flex items-center py-1 px-3 ${active ? 'text-indigo-600 dark:text-indigo-400' : 'text-indigo-500'}`} href="#0">
+              <button
+                className={`font-medium text-sm flex items-center py-1 px-3 ${active
+                    ? "text-indigo-600 dark:text-indigo-400"
+                    : "text-indigo-500"
+                  }`}
+                onClick={signout}
+              >
                 Sign Out
-              </Link>
+              </button>
             )}
           </Menu.Item>
         </Menu.Items>

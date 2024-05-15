@@ -2,7 +2,7 @@
 
 import dbConnect from "../lib/dbConnect";
 import User from "@/models/user";
-import { createSession, deleteSession } from "../lib/session";
+import { createSession, deleteSession, getSession } from "../lib/session";
 import bcrypt from "bcryptjs";
 
 export async function signup(email: string, name: string, password: string, confirmPassword: string) {
@@ -69,11 +69,28 @@ export async function signin(email: string, password: string) {
 
 export async function logout() {
     try {
-      deleteSession();
-      return { success: true, message: "Sign out successful" };
+        deleteSession();
+        return { success: true, message: "Sign out successful" };
 
     } catch (error) {
-      console.error(error);
-      return { success: false, message: "An internal error has occured" };
+        console.error(error);
+        return { success: false, message: "An internal error has occured" };
     }
-  }
+}
+
+export async function getName() {
+    try {
+        const session = await getSession();
+        if (session) {
+            const name = session.name;
+            return { success: true, message: name }
+
+        } else {
+            return { success: false, message: "No session found" };
+        }
+
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: "An internal error has occured" };
+    }
+}

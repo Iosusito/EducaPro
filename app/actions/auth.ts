@@ -18,6 +18,7 @@ export async function signup(email: string, name: string, password: string, conf
         return { success: false, message: "The password has to be at least 8 characters" };
     }
 
+    // signup
     try {
         await dbConnect();
 
@@ -32,7 +33,7 @@ export async function signup(email: string, name: string, password: string, conf
 
         await user.save();
 
-        await createSession(user._id, user.name);
+        await createSession(user._id, user.name, user.role);
 
         return { success: true, message: "Sign up successful" };
 
@@ -49,6 +50,7 @@ export async function signin(email: string, password: string) {
         return { success: false, message: "Please fill all fields" };
     }
 
+    // signin
     try {
         await dbConnect();
 
@@ -57,7 +59,7 @@ export async function signin(email: string, password: string) {
             return { success: false, message: "Email or password incorrect" };
         }
 
-        await createSession(user._id, user.name);
+        await createSession(user._id, user.name, user.role);
 
         return { success: true, message: "Sign in successful" };
 
@@ -84,6 +86,23 @@ export async function getName() {
         if (session) {
             const name = session.name;
             return { success: true, message: name }
+
+        } else {
+            return { success: false, message: "No session found" };
+        }
+
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: "An internal error has occured" };
+    }
+}
+
+export async function getRole() {
+    try {
+        const session = await getSession();
+        if (session) {
+            const role = session.role;
+            return { success: true, message: role }
 
         } else {
             return { success: false, message: "No session found" };

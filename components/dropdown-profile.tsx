@@ -6,7 +6,7 @@ import { Menu, Transition } from '@headlessui/react'
 import UserAvatar from '@/public/images/user-avatar-32.png'
 import { logout } from '@/app/actions/auth'
 import { useRouter } from 'next/navigation'
-import { getName } from "@/app/actions/auth";
+import { getName, getRole } from "@/app/actions/auth";
 import { SetStateAction, useEffect, useState } from 'react'
 
 export default function DropdownProfile({ align }: {
@@ -36,6 +36,23 @@ export default function DropdownProfile({ align }: {
     fetchData();
   }, []);
 
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { success, message } = await getRole();
+        if (success) {
+          setRole(message as SetStateAction<string>);
+        } // else?
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <Menu as="div" className="relative inline-flex">
       <Menu.Button className="inline-flex justify-center items-center group">
@@ -59,7 +76,7 @@ export default function DropdownProfile({ align }: {
       >
         <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
           <div className="font-medium text-slate-800 dark:text-slate-100">{name}</div>
-          <div className="text-xs text-slate-500 dark:text-slate-400 italic">Administrator</div>
+          <div className="text-xs text-slate-500 dark:text-slate-400 italic">{role}</div>
         </div>
         <Menu.Items as="ul" className="focus:outline-none">
           <Menu.Item as="li">

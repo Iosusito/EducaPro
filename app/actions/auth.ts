@@ -5,10 +5,10 @@ import User from "@/models/user";
 import { createSession, deleteSession, getSession } from "../lib/session";
 import bcrypt from "bcryptjs";
 
-export async function signup(email: string, name: string, password: string, confirmPassword: string) {
+export async function signup(name: string, lastname: string, email: string, phone: string, password: string, confirmPassword: string) {
 
     // validaciones
-    if (name === "" || email === "" || password === "" || confirmPassword === "") {
+    if (name === "" || lastname === "" || email === "" || phone === "" || password === "" || confirmPassword === "") {
         return { success: false, message: "Please fill all fields" };
 
     } else if (password !== confirmPassword) {
@@ -29,7 +29,7 @@ export async function signup(email: string, name: string, password: string, conf
 
         //encriptar la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ email, name, password: hashedPassword });
+        const user = new User({ name, lastname, email, phone, password: hashedPassword });
 
         await user.save();
 

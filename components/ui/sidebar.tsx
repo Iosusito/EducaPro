@@ -201,37 +201,30 @@ export default function Sidebar() {
                         <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                           <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                             <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/admin/presales">
+                              <SidebarLink href="/dashboard">
                                 <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Preventas
+                                  Cursos
                                 </span>
                               </SidebarLink>
                             </li>
                             <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/admin/users">
+                              <SidebarLink href="/dashboard">
                                 <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                   Usuarios
                                 </span>
                               </SidebarLink>
                             </li>
                             <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/admin/helps">
+                              <SidebarLink href="/dashboard">
                                 <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                   Ayuda
                                 </span>
                               </SidebarLink>
                             </li>
                             <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/admin/notices">
+                              <SidebarLink href="/dashboard">
                                 <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                   Noticias
-                                </span>
-                              </SidebarLink>
-                            </li>
-                            <li className="mb-1 last:mb-0">
-                              <SidebarLink href="/admin/payreferrals">
-                                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                  Pagar Referidos
                                 </span>
                               </SidebarLink>
                             </li>
@@ -276,7 +269,7 @@ export default function Sidebar() {
                 className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${segments.includes("investments") && "bg-slate-900"
                   }`}
               >
-                <SidebarLink href="/investments">
+                <SidebarLink href="/dashboard">
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
                       <path
@@ -312,7 +305,7 @@ export default function Sidebar() {
                 className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${segments.includes("referrals") && "bg-slate-900"
                   }`}
               >
-                <SidebarLink href="/referrals">
+                <SidebarLink href="/dashboard">
                   <div className="flex items-center">
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
                       <path

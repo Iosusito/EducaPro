@@ -37,14 +37,7 @@ export default function EditMenu({
               <Menu.Item as="li">
                 {({ active }) => (
                   <Link className={`font-medium text-sm flex py-1 px-3 ${active ? 'text-slate-800 dark:text-slate-200' : 'text-slate-600 dark:text-slate-300'}`} href="#0">
-                    Option 1
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item as="li">
-                {({ active }) => (
-                  <Link className={`font-medium text-sm flex py-1 px-3 ${active ? 'text-slate-800 dark:text-slate-200' : 'text-slate-600 dark:text-slate-300'}`} href="#0">
-                    Option 2
+                    Update
                   </Link>
                 )}
               </Menu.Item>

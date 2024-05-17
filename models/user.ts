@@ -1,21 +1,39 @@
 import mongoose from "mongoose";
 
 export interface IUser extends mongoose.Document {
-    email: string;
     name: string;
+    lastname: string;
+    username: string; //???
+    email: string;
+    phone: string;
     password: string;
     role: string; // Admin, User
+    signUpDate: Date;
 }
 
 const UserSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    lastname: {
+        type: String,
+        required: true
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
     email: {
         type: String,
         required: true,
         unique: true
     },
-    name: {
+    phone: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -25,6 +43,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: "User"
+    },
+    signUpDate: {
+        type: Date,
+        default: Date.now
     }
 });
 

@@ -9,8 +9,11 @@ import { signup } from '@/app/actions/auth'
 import { useRouter } from 'next/navigation'
 
 export default function SignUp() {
-  const [email, setEmail] = useState("");
+
   const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -20,10 +23,10 @@ export default function SignUp() {
     event.preventDefault();
 
     try {
-      const { success, message } = await signup(email, name, password, confirmPassword);
+      const { success, message } = await signup(name, lastname, email, phone, password, confirmPassword);
 
       if (success) {
-        router.push('/dashboard');  
+        router.push('/dashboard');
         toast.success(message);
 
       } else {
@@ -50,14 +53,25 @@ export default function SignUp() {
               {/* Form */}
               <form onSubmit={handleButton}>
                 <div className="space-y-4">
+
                   <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address <span className="text-rose-500">*</span></label>
+                    <label className="block text-sm font-medium mb-1" htmlFor="name">Name<span className="text-rose-500">*</span></label>
+                    <input id="name" className="form-input w-full" type="text" value={name} onChange={e => setName(e.target.value)} />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1" htmlFor="name">Lastname<span className="text-rose-500">*</span></label>
+                    <input id="name" className="form-input w-full" type="text" value={lastname} onChange={e => setLastname(e.target.value)} />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1" htmlFor="email">Email Address<span className="text-rose-500">*</span></label>
                     <input id="email" className="form-input w-full" type="email" value={email} onChange={e => setEmail(e.target.value)} />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-1" htmlFor="name">Full Name <span className="text-rose-500">*</span></label>
-                    <input id="name" className="form-input w-full" type="text" value={name} onChange={e => setName(e.target.value)} />
+                    <label className="block text-sm font-medium mb-1" htmlFor="email">Phone number<span className="text-rose-500">*</span></label>
+                    <input id="email" className="form-input w-full" type="email" value={phone} onChange={e => setPhone(e.target.value)} />
                   </div>
 
                   <div>

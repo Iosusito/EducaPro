@@ -2,22 +2,27 @@ import mongoose from "mongoose";
 import { IUser } from "./user";
 
 export interface ICourse extends mongoose.Document {
-    name: string;
+    title: string;
     description: string;
-    Students: IUser[];
+    color: string; //color que aparecera en el cuadro de la lista de cursos
+    students: IUser[];
 }
 
 const CourseSchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     description: {
         type: String,
         required: true
     },
-    Students: [{
+    color: {
+        type: String,
+        default: "#000000", //negro (provisional)
+        required: true
+    },
+    students: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User" //nombre de la coleccion el la DB????
     }]

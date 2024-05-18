@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export interface IUser extends mongoose.Document {
     name: string;
     lastname: string;
-    username: string; //???
+    username: string; //el email sin el dominio
     email: string;
     phone: string;
     password: string;
@@ -23,7 +23,6 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true
     },
     email: {
         type: String,

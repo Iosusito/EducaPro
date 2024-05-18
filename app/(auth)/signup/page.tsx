@@ -71,7 +71,7 @@ export default function SignUp() {
 
                   <div>
                     <label className="block text-sm font-medium mb-1" htmlFor="email">Phone number<span className="text-rose-500">*</span></label>
-                    <input id="email" className="form-input w-full" type="email" value={phone} onChange={e => setPhone(e.target.value)} />
+                    <input id="email" className="form-input w-full" type="number" value={phone} onChange={e => setPhone(e.target.value)} />
                   </div>
 
                   <div>

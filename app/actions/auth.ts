@@ -2,6 +2,7 @@
 
 import dbConnect from "../lib/dbConnect";
 import User from "@/models/user";
+import Course from "@/models/course";
 import { createSession, deleteSession, getSession } from "../lib/session";
 import bcrypt from "bcryptjs";
 
@@ -24,15 +25,20 @@ export async function signup(name: string, lastname: string, email: string, phon
 
         const existsUser = await User.findOne({ email });
         if (existsUser) {
-            return { success: false, message: "User already exist" };
+            return { success: false, message: "This email is alredy in use" };
         }
+
+        // el username es el email sin el dominio
+        const username = email.split("@")[0];
 
         //encriptar la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ name, lastname, email, phone, password: hashedPassword });
 
+        // crear y guardar el usuario en la BD
+        const user = new User({ name, lastname, username, email, phone, password: hashedPassword });
         await user.save();
 
+        // crear la sesion en el navegador
         await createSession(user._id, user.name, user.role);
 
         return { success: true, message: "Sign up successful" };
@@ -59,7 +65,7 @@ export async function signin(email: string, password: string) {
             return { success: false, message: "Email or password incorrect" };
         }
 
-        await createSession(user._id, user.name, user.role);
+        await createSession(user._id, user.username, user.role);
 
         return { success: true, message: "Sign in successful" };
 
@@ -73,6 +79,27 @@ export async function logout() {
     try {
         deleteSession();
         return { success: true, message: "Sign out successful" };
+
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: "An internal error has occured" };
+    }
+}
+
+export async function createCourse(title: string, description: string) {
+
+    // validaciones
+    if (title === "" || description === "") {
+        return { success: false, message: "Please fill all fields" };
+    }
+
+    try {
+        await dbConnect();
+
+        const course = new Course({ title, description });
+        await course.save();
+
+        return { success: true, message: "Course successfully created" };
 
     } catch (error) {
         console.error(error);

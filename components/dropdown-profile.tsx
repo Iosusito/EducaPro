@@ -6,7 +6,7 @@ import { Menu, Transition } from '@headlessui/react'
 import UserAvatar from '@/public/images/user-avatar-32.png'
 import { logout } from '@/app/actions/auth'
 import { useRouter } from 'next/navigation'
-import { getName, getRole } from "@/app/actions/auth";
+import { getName, getRole } from "@/app/actions/session";
 import { SetStateAction, useEffect, useState } from 'react'
 
 export default function DropdownProfile({ align }: {

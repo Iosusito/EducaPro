@@ -4,11 +4,13 @@ import WelcomeBanner from './welcome-banner'
 import DashboardAvatars from './dashboard-avatars'
 import FilterButton from '@/components/dropdown-filter'
 import Datepicker from '@/components/datepicker'
-import CourseCard from './course-card'
+import CourseCardCollection from './course-card-collection'
 import ModalBasic from "@/components/modal-basic"
-import { useState } from 'react'
-import { createCourse } from '@/app/actions/auth'
+import { useEffect, useState } from 'react'
+import { createCourse, getCourses } from '@/app/actions/course'
 import { toast } from 'react-toastify'
+import { Course } from '@/app/lib/definitions'
+import { getRole } from '@/app/actions/session'
 
 export default function Dashboard() {
 
@@ -39,6 +41,47 @@ export default function Dashboard() {
       console.error();
     }
   }
+
+  // Obtener todos los cursos de la base de datos
+  const [courses, setCourses] = useState<Course[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { success, message } = await getCourses();
+
+        console.log(message);
+        if (success) {
+          const courses: Course[] = message as Course[];
+          setCourses(courses);
+
+        } // else?
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const [adminRights, setAdminRights] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { success, message } = await getRole();
+        if (success) {
+          if (message === "Admin") {
+            setAdminRights(true);
+          } // else?
+        } // else?
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">
@@ -98,11 +141,7 @@ export default function Dashboard() {
       </div>
 
       {/* Courses */}
-      <div className="grid grid-cols-12 gap-6">
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-      </div>
+      <CourseCardCollection courses={courses} adminRights={adminRights} />
     </div>
   )
 }

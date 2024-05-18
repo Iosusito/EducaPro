@@ -8,7 +8,7 @@ import { getBreakpoint } from "../utils/utils";
 import SidebarLinkGroup from "./sidebar-link-group";
 import SidebarLink from "./sidebar-link";
 import Logo from "./logo";
-import { getRole } from "@/app/actions/auth";
+import { getRole } from "@/app/actions/session";
 
 export default function Sidebar() {
   const sidebar = useRef<HTMLDivElement>(null);

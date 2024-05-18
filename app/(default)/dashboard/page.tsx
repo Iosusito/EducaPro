@@ -9,6 +9,7 @@ import ModalBasic from "@/components/modal-basic"
 import { useState } from 'react'
 import { createCourse } from '@/app/actions/auth'
 import { toast } from 'react-toastify'
+import { set } from 'mongoose'
 
 export default function Dashboard() {
 
@@ -22,9 +23,14 @@ export default function Dashboard() {
 
     try {
       const { success, message } = await createCourse(title, description);
+
       if (success) {
         toast.success(message);
-        setModalOpen(false); // se cierra el modal tras crear el curso (y si no se quiere???)
+
+        // resetear los inputs y cerrar el modal
+        setTitle("");
+        setDescription("");
+        setModalOpen(false);
 
       } else {
         toast.error(message);
@@ -64,7 +70,7 @@ export default function Dashboard() {
                   <div className="space-y-3">
                     <div>
                       <label className="block text-sm font-medium mb-1" htmlFor="name">Title<span className="text-rose-500"></span></label>
-                      <input id="name" className="form-input w-full px-2 py-1" type="text" value={title} onChange={e => setTitle(e.target.value)}/>
+                      <input id="name" className="form-input w-full px-2 py-1" type="text" value={title} onChange={e => setTitle(e.target.value)} />
                     </div>
 
                     <div>
@@ -73,10 +79,16 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
-                {/* Modal footer */}
+
                 <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
                   <div className="flex flex-wrap justify-end space-x-2">
-                    <button className="btn-sm border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300" onClick={() => { setModalOpen(false) }}>Cancel</button>
+                    <button
+                      type="button"
+                      className="btn-sm border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+                      onClick={() => { setModalOpen(false), setTitle(""), setDescription("") }}
+                    >
+                      Cancel
+                    </button>
                     <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">Create</button>
                   </div>
                 </div>

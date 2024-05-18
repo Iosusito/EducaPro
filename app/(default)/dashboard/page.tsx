@@ -9,7 +9,6 @@ import ModalBasic from "@/components/modal-basic"
 import { useState } from 'react'
 import { createCourse } from '@/app/actions/auth'
 import { toast } from 'react-toastify'
-import { set } from 'mongoose'
 
 export default function Dashboard() {
 

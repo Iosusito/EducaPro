@@ -9,6 +9,7 @@ export interface IUser extends mongoose.Document {
     password: string;
     role: string; // Admin, User
     signUpDate: Date;
+    courses: mongoose.Schema.Types.ObjectId[];
 }
 
 const UserSchema = new mongoose.Schema({
@@ -46,6 +47,10 @@ const UserSchema = new mongoose.Schema({
     signUpDate: {
         type: Date,
         default: Date.now
+    },
+    courses: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course" //nombre de la coleccion el la DB????
     }
 });
 

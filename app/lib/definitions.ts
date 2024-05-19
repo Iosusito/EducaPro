@@ -8,6 +8,7 @@ export interface User {
     password: string;
     role: string;
     signUpDate: Date;
+    //courses: Course[];
 }
 
 export interface Course {
@@ -15,5 +16,5 @@ export interface Course {
     title: string;
     description: string;
     color: string;
-    Students: User[];
+    students: User[];
 };

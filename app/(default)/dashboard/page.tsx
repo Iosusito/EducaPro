@@ -50,11 +50,10 @@ export default function Dashboard() {
       try {
         const { success, message } = await getCourses();
 
-        console.log(message);
         if (success) {
           const courses: Course[] = message as Course[];
           setCourses(courses);
-
+          //console.log(courses[0].students);
         } // else?
 
       } catch (error) {
@@ -111,14 +110,16 @@ export default function Dashboard() {
 
                   <div className="space-y-3">
                     <div>
-                      <label className="block text-sm font-medium mb-1" htmlFor="name">Title<span className="text-rose-500"></span></label>
-                      <input id="name" className="form-input w-full px-2 py-1" type="text" value={title} onChange={e => setTitle(e.target.value)} />
+                      <label className="block text-sm font-medium mb-1" htmlFor="title">Title<span className="text-rose-500"></span></label>
+                      <input id="title" className="form-input w-full px-2 py-1" type="text" value={title} onChange={e => setTitle(e.target.value)} />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-1" htmlFor="feedback">Description<span className="text-rose-500"></span></label>
-                      <textarea id="feedback" className="form-textarea w-full px-2 py-1" rows={4} value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                      <label className="block text-sm font-medium mb-1" htmlFor="description">Description<span className="text-rose-500"></span></label>
+                      <textarea id="description" className="form-textarea w-full px-2 py-1" rows={4} value={description} onChange={e => setDescription(e.target.value)}></textarea>
                     </div>
+
+                    {/* Elegir la imagen */}
                   </div>
                 </div>
 

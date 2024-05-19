@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
-import { IUser } from "./user";
 
 export interface ICourse extends mongoose.Document {
     title: string;
     description: string;
     color: string; //color que aparecera en el cuadro de la lista de cursos
-    students: IUser[];
+    students: mongoose.Schema.Types.ObjectId[];
 }
 
 const CourseSchema = new mongoose.Schema({

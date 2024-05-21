@@ -9,7 +9,7 @@ import ModalBasic from "@/components/modal-basic"
 import { useEffect, useState } from 'react'
 import { createCourse, getCourses } from '@/app/actions/course'
 import { toast } from 'react-toastify'
-import { Course } from '@/app/lib/definitions'
+import { CourseData } from '@/app/lib/definitions'
 import { getRole } from '@/app/actions/session'
 
 export default function Dashboard() {
@@ -43,7 +43,7 @@ export default function Dashboard() {
   }
 
   // Obtener todos los cursos de la base de datos
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<CourseData[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +51,7 @@ export default function Dashboard() {
         const { success, message } = await getCourses();
 
         if (success) {
-          const courses: Course[] = message as Course[];
+          const courses: CourseData[] = message as CourseData[];
           setCourses(courses);
           //console.log(courses[0].students);
         } // else?

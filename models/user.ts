@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ICourse } from "./course";
 
 export interface IUser extends mongoose.Document {
     name: string;
@@ -9,10 +10,10 @@ export interface IUser extends mongoose.Document {
     password: string;
     role: string; // Admin, User
     signUpDate: Date;
-    courses: mongoose.Schema.Types.ObjectId[];
+    courses: ICourse[];
 }
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<IUser>({
     name: {
         type: String,
         required: true
@@ -46,11 +47,12 @@ const UserSchema = new mongoose.Schema({
     },
     signUpDate: {
         type: Date,
+        required: false,
         default: Date.now
     },
     courses: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course" //nombre de la coleccion el la DB????
+        id: { type: String, required: false },
+        title: {type: String, required: false}
     }
 });
 

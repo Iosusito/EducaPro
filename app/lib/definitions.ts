@@ -1,4 +1,4 @@
-export interface User {
+export interface UserData {
     id: string;
     name: string;
     lastname: string;
@@ -8,13 +8,19 @@ export interface User {
     password: string;
     role: string;
     signUpDate: Date;
-    //courses: Course[];
-}
+    courses: [{
+        id: string;
+        title: string;
+    }];
+};
 
-export interface Course {
+export interface CourseData {
     id: string;
     title: string;
     description: string;
     color: string;
-    students: User[];
+    students: [{
+        id: string;
+        email: string;
+    }];
 };

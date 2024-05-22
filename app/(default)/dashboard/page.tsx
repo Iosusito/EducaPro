@@ -7,13 +7,14 @@ import Datepicker from '@/components/datepicker'
 import CourseCardCollection from './course-card-collection'
 import ModalBasic from "@/components/modal-basic"
 import { useEffect, useState } from 'react'
-import { createCourse, getCourses } from '@/app/actions/course'
+import { addStudentToCourse, createCourse, getCourses } from '@/app/actions/course'
 import { toast } from 'react-toastify'
 import { CourseData } from '@/app/lib/definitions'
 import { getRole } from '@/app/actions/session'
 
 export default function Dashboard() {
 
+  // modal crear-curso
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const [title, setTitle] = useState<string>("");
@@ -32,6 +33,35 @@ export default function Dashboard() {
         setTitle("");
         setDescription("");
         setModalOpen(false);
+
+      } else {
+        toast.error(message);
+      }
+
+    } catch (error) {
+      console.error();
+    }
+  }
+
+  // modal añadir-usuario a curso
+  const [UserModalOpen, setUserModalOpen] = useState<boolean>(false);
+
+  const [user, setUser] = useState<string>("");
+  const [course, setCourse] = useState<string>("");
+
+  const handleUserButton = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const { success, message } = await addStudentToCourse(course, user);
+
+      if (success) {
+        toast.success(message);
+
+        // resetear los inputs y cerrar el modal
+        setCourse("");
+        setUser("")
+        setUserModalOpen(false);
 
       } else {
         toast.error(message);
@@ -95,7 +125,8 @@ export default function Dashboard() {
           <FilterButton align="right" />
           {/* Datepicker built with flatpickr */}
           <Datepicker align="right" />
-          {/* Add view button */}
+
+          {/* Add course button */}
           <button onClick={() => { setModalOpen(true) }} className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
             <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
               <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
@@ -138,6 +169,50 @@ export default function Dashboard() {
               </form>
             </ModalBasic>
           </button>
+
+          {/* Add user to course button */}
+          <button onClick={() => { setUserModalOpen(true) }} className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+            <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
+              <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+            </svg>
+            <span className="hidden xs:block ml-2">Add User</span>
+            <ModalBasic isOpen={UserModalOpen} setIsOpen={setUserModalOpen} title="Add course">
+              <form onSubmit={handleUserButton}>
+                <div className="px-5 py-4">
+                  <div className="text-sm">
+                    <div className="font-medium text-slate-800 dark:text-slate-100 mb-3">Add a student to a course</div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-1" htmlFor="course">Course<span className="text-rose-500"></span></label>
+                      <input id="course" className="form-input w-full px-2 py-1" type="text" value={course} onChange={e => setCourse(e.target.value)} />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-1" htmlFor="user">Student<span className="text-rose-500"></span></label>
+                      <input id="user" className="form-input w-full px-2 py-1" type="text" value={user} onChange={e => setUser(e.target.value)} />
+                    </div>
+
+                  </div>
+                </div>
+
+                <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
+                  <div className="flex flex-wrap justify-end space-x-2">
+                    <button
+                      type="button"
+                      className="btn-sm border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+                      onClick={() => { setUserModalOpen(false), setCourse(""), setCourse("") }}
+                    >
+                      Cancel
+                    </button>
+                    <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">Add</button>
+                  </div>
+                </div>
+              </form>
+            </ModalBasic>
+          </button>
+          
         </div>
       </div>
 

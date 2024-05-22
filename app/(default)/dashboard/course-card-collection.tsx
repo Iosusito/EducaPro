@@ -1,13 +1,13 @@
 'use client'
 
-import { Course } from '@/app/lib/definitions'
+import { CourseData } from '@/app/lib/definitions'
 import CourseCard from './course-card'
 
 export default function CourseCardCollection({
     courses,
     adminRights
 }: {
-    courses: Course[],
+    courses: CourseData[],
     adminRights: boolean
 }) {
     return (

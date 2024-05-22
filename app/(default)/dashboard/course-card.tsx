@@ -1,13 +1,13 @@
 'use client'
 
 import CourseCardMenu from './course-card-menu'
-import { Course } from '@/app/lib/definitions'
+import { CourseData } from '@/app/lib/definitions'
 
 export default function CourseCard({
   course,
   adminRights
 }: {
-  course: Course,
+  course: CourseData,
   adminRights: boolean
 }) {
   return (

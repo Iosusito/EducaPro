@@ -5,6 +5,7 @@ import { getSession } from "../lib/session";
 export async function getName() {
     try {
         const session = await getSession();
+
         if (session) {
             const name = session.username;
             return { success: true, message: name }
@@ -22,9 +23,10 @@ export async function getName() {
 export async function getRole() {
     try {
         const session = await getSession();
+
         if (session) {
             const role = session.role;
-            return { success: true, message: role }
+            return { success: true, message: role };
 
         } else {
             return { success: false, message: "No session found" };

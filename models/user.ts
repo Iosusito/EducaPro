@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import { ICourse } from "./course";
 
+const CourseSchema = new mongoose.Schema<ICourse>({
+    id: { type: String, required: false },
+    title: { type: String, required: false }
+});
+
 export interface IUser extends mongoose.Document {
     name: string;
     lastname: string;
@@ -50,10 +55,7 @@ const UserSchema = new mongoose.Schema<IUser>({
         required: false,
         default: Date.now
     },
-    courses: {
-        id: { type: String, required: false },
-        title: {type: String, required: false}
-    }
+    courses: [CourseSchema]
 });
 
 export default mongoose.models.User || mongoose.model<IUser>("User", UserSchema);

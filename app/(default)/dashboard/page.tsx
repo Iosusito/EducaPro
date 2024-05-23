@@ -28,6 +28,9 @@ export default function Dashboard() {
 
       if (success) {
         toast.success(message);
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 2000);
 
         // resetear los inputs y cerrar el modal
         setTitle("");
@@ -212,7 +215,7 @@ export default function Dashboard() {
               </form>
             </ModalBasic>
           </button>
-          
+
         </div>
       </div>
 

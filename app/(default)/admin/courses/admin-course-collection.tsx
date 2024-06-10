@@ -1,17 +1,17 @@
 'use client'
 
 import { CourseData } from '@/app/lib/definitions'
-import CourseCard from './course-card'
+import AdminCourseCard from './admin-course-card'
 
-export default function CourseCardCollection({
-    courses
+export default function AdminCourseCollection({
+    courses,
 }: {
-    courses: CourseData[],
+    courses: CourseData[]
 }) {
     return (
         <div className="grid grid-cols-12 gap-6">
             {courses.map((course) =>
-                <CourseCard course={course}/>
+                <AdminCourseCard course={course}/>
             )}
         </div>
     )

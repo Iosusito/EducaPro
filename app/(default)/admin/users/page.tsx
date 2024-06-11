@@ -220,7 +220,7 @@ export default function AdminUsers() {
       </div>
 
       {/* Courses */}
-      <CourseCardCollection courses={courses} adminRights={adminRights} />
+      <CourseCardCollection courses={courses}/>
     </div>
   )
 }

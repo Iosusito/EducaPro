@@ -96,3 +96,20 @@ export async function addStudentToCourse(courseTitle: string, studentEmail: stri
         return { success: false, message: "An internal error has occured" };
     }
 }
+
+export async function deleteCourse(courseId: string) {
+    try {
+        await dbConnect();
+
+        const course = await Course.findById(courseId);
+        if (!course) return { success: false, message: "Course not found" };
+
+        await Course.findByIdAndDelete(courseId);
+
+        return { success: true, message: "Course deleted successfully" };
+
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: "An internal error has occured" };
+    }
+}

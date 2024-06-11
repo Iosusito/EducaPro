@@ -2,6 +2,8 @@
 
 import { Menu, Transition } from '@headlessui/react'
 import Link from 'next/link'
+import { deleteCourse } from '@/app/actions/course'
+import { toast } from 'react-toastify'
 
 export default function CourseCardMenu({
   courseID,
@@ -12,6 +14,22 @@ export default function CourseCardMenu({
   align?: 'left' | 'right',
   className?: string
 }) {
+  const handleDeleteButton = async (event: any) => {
+    event.preventDefault();
+
+    try {
+      console.log(courseID);
+      const { success, message } = await deleteCourse(courseID);
+      if (success) {
+        toast.success(message);
+      } else {
+        toast.error(message);
+      }
+    } catch (error) {
+      console.error();
+    }
+  }
+
   return (
     <Menu as="div" className={`relative inline-flex ${className}`}>
       {({ open }) => (
@@ -46,9 +64,12 @@ export default function CourseCardMenu({
 
               <Menu.Item as="li">
                 {({ active }) => (
-                  <Link className={`font-medium text-sm flex py-1 px-3 ${active ? 'text-rose-600' : 'text-rose-500'}`} href="#0">
+                  <button
+                    onClick={handleDeleteButton}
+                    className={`font-medium text-sm flex py-1 px-3 ${active ? 'text-rose-600' : 'text-rose-500'}`}
+                  >
                     Remove
-                  </Link>
+                  </button>
                 )}
               </Menu.Item>
             </Menu.Items>

@@ -29,7 +29,7 @@ export async function getCourses() {
     try {
         await dbConnect();
 
-        const courses = await Course.find().select("title background");
+        const courses = await Course.find().select("_id title background");
 
         return { success: true, message: courses };
 

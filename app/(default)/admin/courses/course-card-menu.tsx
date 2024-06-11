@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { deleteCourse } from '@/app/actions/course'
 import { toast } from 'react-toastify'
-
+import { useRouter } from 'next/navigation';
 export default function CourseCardMenu({
   courseID,
   align,
@@ -14,6 +14,8 @@ export default function CourseCardMenu({
   align?: 'left' | 'right',
   className?: string
 }) {
+  const router = useRouter();
+
   const handleDeleteButton = async (event: any) => {
     event.preventDefault();
 
@@ -21,6 +23,7 @@ export default function CourseCardMenu({
       console.log(courseID);
       const { success, message } = await deleteCourse(courseID);
       if (success) {
+        router.push('/dashboard');
         toast.success(message);
       } else {
         toast.error(message);

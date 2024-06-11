@@ -1,6 +1,5 @@
 'use client'
 
-//import CourseCardMenu from './course-card-menu'
 import { CourseData } from '@/app/lib/definitions'
 import CourseCardMenu from './course-card-menu'
 
@@ -17,12 +16,12 @@ export default function AdminCourseCard({
           {/* Title */}
           <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">{course.title}</h2>
           {/* Menu button (Admin) */}
-          <CourseCardMenu courseID={course.id} align="right" />
-          
+          <CourseCardMenu courseID={course?._id} align="right" />
+
         </header>
 
         {/* Image */}
-        <div className="bg-[#ffffff] h-48 mb-4 rounded-lg"></div>
+        <div className={`bg-[#ffffff] h-48 mb-4 rounded-lg`}></div>
 
       </div>
     </div>

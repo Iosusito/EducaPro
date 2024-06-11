@@ -1,15 +1,12 @@
 'use client'
 
-import DashboardAvatars from '../../dashboard/dashboard-avatars'
 import FilterButton from '@/components/dropdown-filter'
-import Datepicker from '@/components/datepicker'
 import AdminCourseCollection from './admin-course-collection'
 import ModalBasic from "@/components/modal-basic"
 import { useEffect, useState } from 'react'
 import { addStudentToCourse, createCourse, getCourses } from '@/app/actions/course'
 import { toast } from 'react-toastify'
 import { CourseData } from '@/app/lib/definitions'
-import { getRole } from '@/app/actions/session'
 
 export default function AdminCourses() {
 
@@ -62,7 +59,7 @@ export default function AdminCourses() {
 
         // resetear los inputs y cerrar el modal
         setCourse("");
-        setUser("")
+        setUser("");
         setUserModalOpen(false);
 
       } else {
@@ -85,30 +82,11 @@ export default function AdminCourses() {
         if (success) {
           const courses: CourseData[] = message as CourseData[];
           setCourses(courses);
-          //console.log(courses[0].students);
+          
         } // else?
 
       } catch (error) {
         console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
-
-  const [adminRights, setAdminRights] = useState(false);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const { success, message } = await getRole();
-        if (success) {
-          if (message === "Admin") {
-            setAdminRights(true);
-          } // else?
-        } // else?
-
-      } catch (err) {
-        console.error(err);
       }
     }
     fetchData();

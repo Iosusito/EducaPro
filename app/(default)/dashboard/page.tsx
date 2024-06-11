@@ -5,6 +5,8 @@ import CourseCardCollection from './course-card-collection'
 import { useEffect, useState } from 'react'
 import { getCourses } from '@/app/actions/course'
 import { CourseData } from '@/app/lib/definitions'
+import { getCoursesOfUser } from '@/app/actions/course'
+//import { get } from '@/app/actions/session'
 
 export default function Dashboard() {
 
@@ -30,7 +32,7 @@ export default function Dashboard() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-[96rem] mx-auto">
-      <WelcomeBanner />
+      {/* <WelcomeBanner /> */}
 
       {/* Courses */}
       <CourseCardCollection courses={courses}/>

@@ -15,10 +15,10 @@ export interface UserData {
 };
 
 export interface CourseData {
-    id: string;
+    _id: string;
     title: string;
     description: string;
-    color: string;
+    background: string;
     students: [{
         id: string;
         email: string;
